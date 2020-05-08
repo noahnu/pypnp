@@ -28,6 +28,7 @@ if __name__ in ["__main__", "builtins"]:
         name="pypnp",
         description="Alternative module resolution system for python",
         author="noahnu",
+        author_email="noah@noahnu.com",
         license="MIT",
         url="https://github.com/noahnu/pypnp",
         entry_points={"console_scripts": ["pypnp-run=pypnp.run:main"],},
