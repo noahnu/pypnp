@@ -17,3 +17,7 @@ else
         return
     fi
 fi
+
+python -m pip install -U pip --no-cache-dir
+python -m pip install -r dev_requirements.txt
+python -m python_githooks

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import importlib
-import sys
-import runpy
-import os
 import inspect
+import os
+import runpy
+import sys
 from pathlib import Path
 
 

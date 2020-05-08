@@ -1,0 +1,35 @@
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.vscode
+    | \.venv
+    | \pypnp.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+line_length = 88
+known_first_party = 'pypnp'
+skip = '''
+.eggs,
+.mypy_cache,
+.venv,
+pypnp.venv,
+build,
+dist,
+stubs,
+'''
