@@ -4,5 +4,6 @@ __pycache__
 *.log
 .eggs
 dist
+version.txt
 
 .vscode
