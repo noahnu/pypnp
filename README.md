@@ -4,6 +4,8 @@
 
 An opinionated dependency management and resolution system in Python.
 
+> **NOTE: This package is still in an experimental stage. It is not ready for production usage.**
+
 ## Motivation
 
 `pypnp` is intended to fill the gaps in Python's dependency management system, by rewriting the way Python resolves module imports. It enables multiple versions of a single dependency to be installed by hooking into, and in some cases rewriting Python's module import system.
