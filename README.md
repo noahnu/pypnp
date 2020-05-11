@@ -1,6 +1,6 @@
 # pypnp
 
-![PyPI - License](https://img.shields.io/pypi/l/pypnp) | ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypnp) | ![PyPI - Downloads](https://img.shields.io/pypi/dm/pypnp) | ![PyPI](https://img.shields.io/pypi/v/pypnp)
+![PyPI - License](https://img.shields.io/pypi/l/pypnp) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pypnp) ![PyPI - Downloads](https://img.shields.io/pypi/dm/pypnp) ![PyPI](https://img.shields.io/pypi/v/pypnp)
 
 An opinionated dependency management and resolution system in Python.
 
