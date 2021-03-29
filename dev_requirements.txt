@@ -26,7 +26,7 @@ pip-tools==5.1.2          # via pypnp
 pkginfo==1.5.0.1          # via twine
 py-githooks==1.1.0        # via pypnp
 pycparser==2.20           # via cffi
-pygments==2.6.1           # via readme-renderer
+pygments==2.7.4           # via readme-renderer
 pyparsing==2.4.7          # via packaging
 readme-renderer==26.0     # via twine
 regex==2020.5.7           # via black
