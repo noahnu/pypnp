@@ -75,11 +75,12 @@ class Loader(importlib.abc.Loader):
 
 class Finder(importlib.abc.MetaPathFinder):
     def find_spec(fullname, path, target=None):
-
         filename = PnPReader.lookup_target(fullname)
         if filename:
             return importlib.util.spec_from_file_location(
-                fullname, filename, loader=Loader(filename),
+                fullname,
+                filename,
+                loader=Loader(filename),
             )
         return None
 
