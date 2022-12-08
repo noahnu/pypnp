@@ -8,7 +8,7 @@ appdirs==1.4.3            # via black
 attrs==19.3.0             # via black
 black==19.10b0            # via pypnp
 bleach==3.1.5             # via readme-renderer
-certifi==2020.4.5.1       # via requests
+certifi==2022.12.7       # via requests
 cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via requests
 click==7.1.2              # via black, pip-tools
