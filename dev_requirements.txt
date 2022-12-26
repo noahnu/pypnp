@@ -41,7 +41,7 @@ twine==3.1.1              # via pypnp
 typed-ast==1.4.1          # via black
 urllib3==1.25.9           # via requests
 webencodings==0.5.1       # via bleach
-wheel==0.34.2             # via pypnp
+wheel==0.38.1             # via pypnp
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==20.1                 # via pip-tools
