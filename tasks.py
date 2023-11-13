@@ -36,6 +36,7 @@ def lint(ctx, fix=False):
         "isort": f"python -m isort {'' if fix else '--check-only --diff'} .",
         "black": f"python -m black {'' if fix else '--check'} .",
         "flake8": "python -m flake8 pypnp",
+        "pylint": "python -m pylint pypnp tasks.py"
     }
     last_error = None
     for section, command in lint_commands.items():
@@ -50,6 +51,7 @@ def lint(ctx, fix=False):
 
 
 def version_scheme(v):
+    """Version scheme to handle pre-release and general releases."""
     if v.exact:
         return v.format_with("{tag}")
     return datetime.now().strftime("%Y.%m.%d.%H%M%S%f")
@@ -60,7 +62,7 @@ def build(ctx):
     """
     Generate version from scm and build package distributable
     """
-    from setuptools_scm import get_version
+    from setuptools_scm import get_version  # pylint: disable=import-outside-toplevel
 
     version = get_version(version_scheme=version_scheme, local_scheme=lambda _: "")
     ctx.run(f"poetry version {version}")
@@ -77,11 +79,11 @@ def publish(ctx, dry_run=True):
 
 
 @task(pre=[build])
-def release(ctx, dry_run=True):
+def release(ctx, dry_run=True, version=None):
     """
     Build and publish package to pypi index based on scm version
     """
-    from semver.version import Version
+    from semver.version import Version  # pylint: disable=import-outside-toplevel
 
     if not dry_run and not os.environ.get("CI"):
         print("This is a CI only command")
