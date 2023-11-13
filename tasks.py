@@ -1,9 +1,7 @@
 import os
+from datetime import datetime
 
-from invoke import (
-    exceptions,
-    task,
-)
+from invoke import exceptions, task
 
 
 @task
@@ -15,18 +13,15 @@ def clean(ctx):
 
 
 @task
-def requirements(ctx, upgrade=False):
+def install(ctx, upgrade=False):
     """
     Build test & dev requirements lock file
     """
-    args = ["--no-emit-find-links", "--no-index", "--allow-unsafe", "--rebuild"]
     if upgrade:
-        args.append("--upgrade")
-    ctx.run(
-        f"echo '-e .[dev]' | python -m piptools compile "
-        f"{' '.join(args)} - -qo- | sed '/^-e / d' > dev_requirements.txt",
-        pty=True,
-    )
+        ctx.run("poetry update")
+    else:
+        ctx.run("poetry lock", pty=True)
+        ctx.run("poetry install", pty=True)
 
 
 @task
@@ -34,9 +29,13 @@ def lint(ctx, fix=False):
     """
     Check and fix syntax
     """
+    if not os.environ.get("CI"):
+        fix = True
+
     lint_commands = {
-        "isort": f"python -m isort {'' if fix else '--check-only --diff'} -y",
+        "isort": f"python -m isort {'' if fix else '--check-only --diff'} .",
         "black": f"python -m black {'' if fix else '--check'} .",
+        "flake8": "python -m flake8 pypnp",
     }
     last_error = None
     for section, command in lint_commands.items():
@@ -50,12 +49,22 @@ def lint(ctx, fix=False):
         raise last_error
 
 
+def version_scheme(v):
+    if v.exact:
+        return v.format_with("{tag}")
+    return datetime.now().strftime("%Y.%m.%d.%H%M%S%f")
+
+
 @task(pre=[clean])
 def build(ctx):
     """
     Generate version from scm and build package distributable
     """
-    ctx.run("python setup.py sdist bdist_wheel")
+    from setuptools_scm import get_version
+
+    version = get_version(version_scheme=version_scheme, local_scheme=lambda _: "")
+    ctx.run(f"poetry version {version}")
+    ctx.run("poetry build")
 
 
 @task
@@ -72,23 +81,28 @@ def release(ctx, dry_run=True):
     """
     Build and publish package to pypi index based on scm version
     """
-    from semver import parse_version_info
+    from semver.version import Version
 
     if not dry_run and not os.environ.get("CI"):
         print("This is a CI only command")
         exit(1)
 
-    # get version created in build
-    with open("version.txt", "r") as f:
-        version = str(f.read())
+    if dry_run and not version:
+        version = ctx.run("poetry version --short").stdout.strip()
+
+    if not version:
+        print("Missing version.")
+        exit(1)
 
     try:
-        should_publish_to_pypi = not dry_run and parse_version_info(version)
+        Version.parse(version)
+        should_publish_to_pypi = not dry_run
     except ValueError:
         should_publish_to_pypi = False
 
     # publish to test to verify builds
-    publish(ctx, dry_run=True)
+    if dry_run:
+        publish(ctx, dry_run=True)
 
     # publish to pypi if test succeeds
     if should_publish_to_pypi:

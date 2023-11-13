@@ -1,6 +1,38 @@
+[tool.poetry]
+name = 'pypnp'
+version = '0.0.2'
+description = 'Alternative module resolution system for python'
+authors = ['noahnu <noah@noahnu.com>']
+license = 'MIT'
+classifiers = [
+  'Programming Language :: Python :: 3',
+  'Intended Audience :: Developers',
+  'Operating System :: OS Independent',
+]
+readme = 'README.md'
+repository = 'https://github.com/noahnu/pypnp'
+include = ['pypnp']
+
+[tool.poetry.scripts]
+pypnp-run = 'pypnp.run:main'
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+
+[tool.poetry.group.dev.dependencies]
+invoke = '^2.0.0'
+pip-tools = "^7.3.0"
+twine = '^4.0.2'
+semver = '^3.0.0'
+isort = '^5.12.0'
+black = '^23.1.0'
+py-githooks = "^1.1.1"
+setuptools-scm = '^8.0.0'
+flake8 = "^6.1.0"
+
 [tool.black]
 line-length = 88
-target-version = ['py38']
+target-version = ['py312']
 include = '\.pyi?$'
 exclude = '''
 (
@@ -12,7 +44,8 @@ exclude = '''
     | \.tox
     | \.vscode
     | \.venv
-    | \pypnp.venv
+    | \.poetry
+    | pypnp.venv
     | _build
     | buck-out
     | build
@@ -24,6 +57,7 @@ exclude = '''
 [tool.isort]
 line_length = 88
 known_first_party = 'pypnp'
+profile = 'black'
 skip = '''
 .eggs,
 .mypy_cache,
@@ -32,4 +66,5 @@ pypnp.venv,
 build,
 dist,
 stubs,
+.poetry,
 '''
