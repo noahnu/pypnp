@@ -22,12 +22,9 @@ jobs:
       TWINE_USERNAME: __token__
       TWINE_PASSWORD: ${{ secrets.PYPI_PUBLISH_TOKEN }}
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: noahnu/.github/.github/actions/setup-python@main
         with:
           fetch-depth: 0
-          persist-credentials: false
-
-      - uses: ./.github/actions/setup-env
 
       - name: Release
         uses: cycjimmy/semantic-release-action@v4.0.0
